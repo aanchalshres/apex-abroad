@@ -1084,7 +1084,7 @@ ul, ol {
    ========================================================================== */
 .how-it-works-section {
   padding: 80px 0;
-  background-color: var(--color-bg-white);
+  background-color: var(--color-bg-light);
 }
 
 .process-steps-wrapper {
@@ -1294,7 +1294,7 @@ ul, ol {
   padding: 36px 0;
   border-top: 1px solid var(--color-border-light);
   border-bottom: 1px solid var(--color-border-light);
-  background-color: var(--color-bg-white);
+  background-color: var(--color-bg-light);
 }
 
 .partners-strip {
