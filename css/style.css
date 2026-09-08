@@ -142,6 +142,8 @@ ul, ol {
   align-items: center;
   justify-content: space-between;
   height: 80px;
+  gap: 24px;
+  padding: 0 20px;
 }
 
 /* Logo */
@@ -150,6 +152,8 @@ ul, ol {
   align-items: center;
   gap: 12px;
   text-decoration: none;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .brand-icon {
@@ -173,6 +177,7 @@ ul, ol {
 .brand-text {
   display: flex;
   flex-direction: column;
+  white-space: nowrap;
 }
 
 .brand-title {
@@ -181,6 +186,9 @@ ul, ol {
   color: var(--color-navy);
   line-height: 1.1;
   letter-spacing: -0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .brand-tagline {
@@ -188,33 +196,42 @@ ul, ol {
   font-weight: 600;
   color: var(--color-text-muted);
   letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Desktop Navigation */
 .main-nav {
   display: flex;
   align-items: center;
+  flex: 1;
+  justify-content: center;
 }
 
 .nav-list {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 20px;
+  flex-wrap: nowrap;
+  justify-content: center;
 }
 
 .nav-item {
   position: relative;
+  white-space: nowrap;
 }
 
 .nav-link {
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--color-navy);
   padding: 8px 4px;
   position: relative;
+  white-space: nowrap;
 }
 
 .nav-link:hover,
@@ -302,36 +319,52 @@ ul, ol {
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 12px;
+  flex-shrink: 0;
 }
 
 .phone-cta {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   color: var(--color-navy);
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.phone-cta span {
+  white-space: nowrap;
 }
 
 .phone-cta:hover {
   color: var(--color-primary);
 }
 
+.phone-cta:hover .phone-icon {
+  background: linear-gradient(135deg, #E64A19 0%, #FF5722 100%);
+  box-shadow: 0 4px 12px rgba(255, 87, 34, 0.4);
+}
+
 .phone-icon {
   width: 32px;
   height: 32px;
   border-radius: var(--radius-full);
-  background-color: var(--color-primary-light);
-  color: var(--color-primary);
+  background: linear-gradient(135deg, #FF5722 0%, #FF7043 100%);
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(255, 87, 34, 0.3);
 }
 
 .phone-icon svg {
   width: 16px;
   height: 16px;
+  stroke-width: 2.5;
 }
 
 /* Buttons */
@@ -341,8 +374,8 @@ ul, ol {
   justify-content: center;
   gap: 8px;
   font-weight: 700;
-  font-size: 14px;
-  padding: 10px 22px;
+  font-size: 13px;
+  padding: 10px 20px;
   border-radius: var(--radius-md);
   border: 1px solid transparent;
   cursor: pointer;
