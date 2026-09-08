@@ -1,16 +1,24 @@
 /**
- * Apex Abroad - Primary JavaScript Functionality
+ * Apex Abroad - Primary JavaScript Functionality & Feedback Engine
  * Handles:
  * - Sticky header
  * - Mobile nav drawer & submenus
  * - Testimonial carousel (Auto-slide, pause-on-hover, dots, prev/next)
  * - FAQ accordions
- * - Form validation (Booking & Contact) with localStorage persistence
  * - Interactive statistics counter with IntersectionObserver
- * - Back to top button
+ * - Back to top button & smooth scroll
+ * - Frontend Feedback Engine:
+ *   - Custom Toast Notifications (Success, Error, Info, Warning)
+ *   - Modal Confirmation Dialogs with Reference Numbers & Copy features
+ *   - Booking Counseling Form validation & submission with localStorage
+ *   - Contact Form validation & submission with localStorage
+ *   - Newsletter / Signup Form validation & submission with localStorage
+ *   - Interactive Button Loading States & Universal Visible Click Feedback
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  initToastSystem();
+  initModalSystem();
   initStickyHeader();
   initMobileNav();
   initTestimonialCarousel();
@@ -18,6 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initStatsCounter();
   initBookingForm();
   initContactForm();
+  initNewsletterForm();
+  initGlobalActionFeedback();
   initBackToTop();
   initSmoothScroll();
 });
@@ -75,7 +85,6 @@ function initMobileNav() {
       const submenu = toggle.nextElementSibling;
       if (submenu && submenu.classList.contains('mobile-submenu')) {
         const isOpen = submenu.classList.contains('open');
-        // Close others
         drawer.querySelectorAll('.mobile-submenu').forEach(sm => sm.classList.remove('open'));
         if (!isOpen) {
           submenu.classList.add('open');
@@ -104,10 +113,8 @@ function initTestimonialCarousel() {
   let autoSlideTimer = null;
   const totalSlides = cards.length;
 
-  // Determine items per view based on window width
   const getItemsPerView = () => (window.innerWidth <= 992 ? 1 : 2);
 
-  // Generate dots
   if (dotsContainer) {
     dotsContainer.innerHTML = '';
     const maxDots = Math.ceil(totalSlides / getItemsPerView());
@@ -126,11 +133,10 @@ function initTestimonialCarousel() {
   const updateCarousel = () => {
     const itemsPerView = getItemsPerView();
     const cardWidth = cards[0].offsetWidth;
-    const gap = 20; // 20px gap
+    const gap = 20;
     const shift = currentIndex * (cardWidth + gap);
     track.style.transform = `translateX(-${shift}px)`;
 
-    // Update dots
     const dots = dotsContainer ? dotsContainer.querySelectorAll('.carousel-dot') : [];
     const activeDotIndex = Math.floor(currentIndex / itemsPerView);
     dots.forEach((dot, idx) => {
@@ -184,7 +190,6 @@ function initTestimonialCarousel() {
     });
   }
 
-  // Auto slide with pause on hover
   const startAutoSlide = () => {
     autoSlideTimer = setInterval(nextSlide, 5000);
   };
@@ -223,7 +228,6 @@ function initFaqAccordion() {
     trigger.addEventListener('click', () => {
       const isActive = item.classList.contains('active');
 
-      // Close all other items in the same container
       const parent = item.parentElement;
       if (parent) {
         parent.querySelectorAll('.accordion-item').forEach(other => {
@@ -257,7 +261,7 @@ function initStatsCounter() {
     const target = parseInt(el.getAttribute('data-counter'), 10);
     const suffix = el.getAttribute('data-suffix') || '';
     const prefix = el.getAttribute('data-prefix') || '';
-    const duration = 1800; // ms
+    const duration = 1800;
     const stepTime = 20;
     const steps = duration / stepTime;
     const increment = target / steps;
@@ -286,113 +290,303 @@ function initStatsCounter() {
 }
 
 /* --------------------------------------------------------------------------
+   Toast Notification System
+   -------------------------------------------------------------------------- */
+let toastContainerEl = null;
+
+function initToastSystem() {
+  if (!document.getElementById('toastContainer')) {
+    toastContainerEl = document.createElement('div');
+    toastContainerEl.id = 'toastContainer';
+    document.body.appendChild(toastContainerEl);
+  } else {
+    toastContainerEl = document.getElementById('toastContainer');
+  }
+}
+
+/**
+ * Show a toast notification
+ * @param {Object} opts
+ * @param {'success'|'error'|'info'|'warning'} opts.type
+ * @param {string} opts.title
+ * @param {string} opts.message
+ * @param {number} [opts.duration=4500]
+ */
+function showToast({ type = 'success', title = '', message = '', duration = 4500 }) {
+  if (!toastContainerEl) initToastSystem();
+
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+
+  const iconMap = {
+    success: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+    error: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
+    info: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>`,
+    warning: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`
+  };
+
+  toast.innerHTML = `
+    <div class="toast-icon-wrapper">
+      ${iconMap[type] || iconMap.info}
+    </div>
+    <div class="toast-content">
+      <div class="toast-title">${title}</div>
+      <div class="toast-message">${message}</div>
+    </div>
+    <button class="toast-close-btn" aria-label="Close notification">&times;</button>
+    <div class="toast-progress-bar" style="animation: toastProgress ${duration}ms linear forwards;"></div>
+  `;
+
+  toastContainerEl.appendChild(toast);
+  requestAnimationFrame(() => {
+    toast.classList.add('toast-show');
+  });
+
+  const removeToast = () => {
+    toast.classList.remove('toast-show');
+    setTimeout(() => {
+      if (toast.parentNode) {
+        toast.parentNode.removeChild(toast);
+      }
+    }, 350);
+  };
+
+  const timer = setTimeout(removeToast, duration);
+
+  const closeBtn = toast.querySelector('.toast-close-btn');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      clearTimeout(timer);
+      removeToast();
+    });
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Modal Confirmation System
+   -------------------------------------------------------------------------- */
+let modalOverlayEl = null;
+
+function initModalSystem() {
+  if (!document.getElementById('feedbackModalOverlay')) {
+    modalOverlayEl = document.createElement('div');
+    modalOverlayEl.id = 'feedbackModalOverlay';
+    modalOverlayEl.className = 'feedback-modal-overlay';
+    modalOverlayEl.innerHTML = `
+      <div class="feedback-modal" role="dialog" aria-modal="true">
+        <button class="feedback-modal-close" id="modalCloseBtn" aria-label="Close modal">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+        <div class="feedback-modal-icon" id="modalIcon">🎉</div>
+        <h3 class="feedback-modal-title" id="modalTitle">Booking Confirmed!</h3>
+        <p class="feedback-modal-subtitle" id="modalSubtitle">Your consultation has been successfully scheduled.</p>
+        <div class="feedback-ref-badge" id="modalRefBadge">Ref: APX-849201</div>
+        <div class="feedback-modal-details" id="modalDetails"></div>
+        <div class="feedback-modal-actions">
+          <button class="btn btn-primary" id="modalConfirmBtn" style="padding: 10px 24px;">Done</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modalOverlayEl);
+
+    const closeBtn = modalOverlayEl.querySelector('#modalCloseBtn');
+    const confirmBtn = modalOverlayEl.querySelector('#modalConfirmBtn');
+
+    const closeModal = () => {
+      modalOverlayEl.classList.remove('active');
+    };
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (confirmBtn) confirmBtn.addEventListener('click', closeModal);
+    modalOverlayEl.addEventListener('click', (e) => {
+      if (e.target === modalOverlayEl) closeModal();
+    });
+  } else {
+    modalOverlayEl = document.getElementById('feedbackModalOverlay');
+  }
+}
+
+/**
+ * Show Modal Dialog with summary details
+ * @param {Object} opts
+ * @param {string} opts.title
+ * @param {string} opts.subtitle
+ * @param {string} opts.refNumber
+ * @param {Array<{label: string, value: string}>} [opts.details]
+ * @param {string} [opts.icon]
+ */
+function showFeedbackModal({ title, subtitle, refNumber, details = [], icon = '🎉' }) {
+  if (!modalOverlayEl) initModalSystem();
+
+  const titleEl = modalOverlayEl.querySelector('#modalTitle');
+  const subtitleEl = modalOverlayEl.querySelector('#modalSubtitle');
+  const refBadgeEl = modalOverlayEl.querySelector('#modalRefBadge');
+  const detailsEl = modalOverlayEl.querySelector('#modalDetails');
+  const iconEl = modalOverlayEl.querySelector('#modalIcon');
+
+  if (titleEl) titleEl.textContent = title;
+  if (subtitleEl) subtitleEl.textContent = subtitle;
+  if (iconEl) iconEl.textContent = icon;
+
+  if (refBadgeEl) {
+    if (refNumber) {
+      refBadgeEl.style.display = 'inline-flex';
+      refBadgeEl.textContent = `Reference #: ${refNumber}`;
+    } else {
+      refBadgeEl.style.display = 'none';
+    }
+  }
+
+  if (detailsEl) {
+    if (details && details.length > 0) {
+      detailsEl.style.display = 'flex';
+      detailsEl.innerHTML = details.map(item => `
+        <div class="feedback-detail-item">
+          <span class="feedback-detail-label">${item.label}:</span>
+          <span class="feedback-detail-value">${item.value}</span>
+        </div>
+      `).join('');
+    } else {
+      detailsEl.style.display = 'none';
+    }
+  }
+
+  modalOverlayEl.classList.add('active');
+}
+
+/* --------------------------------------------------------------------------
    Booking Counseling Form (AJAX with localStorage demo)
    -------------------------------------------------------------------------- */
 function initBookingForm() {
-  const form = document.querySelector('.ajax-booking-form');
-  if (!form) return;
+  const forms = document.querySelectorAll('.ajax-booking-form, #bookingForm');
+  if (!forms.length) return;
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
+  forms.forEach(form => {
+    form.querySelectorAll('input, select, textarea').forEach(input => {
+      input.addEventListener('input', () => input.classList.remove('input-error'));
+      input.addEventListener('change', () => input.classList.remove('input-error'));
+    });
 
-    // Get form values by name
-    const formData = new FormData(form);
-    const name = formData.get('name')?.trim() || '';
-    const phone = formData.get('phone')?.trim() || '';
-    const email = formData.get('email')?.trim() || '';
-    const destination = formData.get('destination')?.trim() || '';
-    const mode = formData.get('mode')?.trim() || '';
-    const preferredDate = formData.get('preferredDate')?.trim() || '';
-    const timeSlot = formData.get('timeSlot')?.trim() || '';
-    const qualification = formData.get('qualification')?.trim() || '';
-    const notes = formData.get('notes')?.trim() || '';
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
 
-    // Validation
-    let isValid = true;
-    let errorMsg = '';
+      const formData = new FormData(form);
+      const name = formData.get('name')?.toString().trim() || '';
+      const phone = formData.get('phone')?.toString().trim() || '';
+      const email = formData.get('email')?.toString().trim() || '';
+      const destination = formData.get('destination')?.toString().trim() || '';
+      const mode = formData.get('mode')?.toString().trim() || '';
+      const preferredDate = formData.get('preferredDate')?.toString().trim() || '';
+      const timeSlot = formData.get('timeSlot')?.toString().trim() || '';
+      const qualification = formData.get('qualification')?.toString().trim() || '';
+      const notes = formData.get('notes')?.toString().trim() || '';
 
-    if (!name) {
-      errorMsg = 'Please enter your full name';
-      isValid = false;
-    } else if (!phone || phone.length < 7) {
-      errorMsg = 'Please enter a valid phone number';
-      isValid = false;
-    } else if (!email || !/\S+@\S+\.\S+/.test(email)) {
-      errorMsg = 'Please enter a valid email address';
-      isValid = false;
-    } else if (!destination) {
-      errorMsg = 'Please select a destination country';
-      isValid = false;
-    } else if (!mode) {
-      errorMsg = 'Please select a counseling mode';
-      isValid = false;
-    } else if (!preferredDate) {
-      errorMsg = 'Please select a preferred date';
-      isValid = false;
-    } else if (!timeSlot) {
-      errorMsg = 'Please select a time slot';
-      isValid = false;
-    } else if (!qualification) {
-      errorMsg = 'Please select your qualification';
-      isValid = false;
-    }
+      let isValid = true;
+      let firstInvalidInput = null;
 
-    if (!isValid) {
-      alert(errorMsg);
-      return;
-    }
-
-    // Show loading state
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const originalText = submitBtn?.innerHTML;
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = 'Processing... ⏳';
-    }
-
-    // Simulate API call with setTimeout
-    setTimeout(() => {
-      // Generate reference ID
-      const refNumber = 'APX-' + Date.now().toString().slice(-8).toUpperCase();
-
-      // Create booking data
-      const bookingData = {
-        refNumber,
-        name,
-        phone,
-        email,
-        destination,
-        mode,
-        preferredDate,
-        timeSlot,
-        qualification,
-        notes,
-        createdAt: new Date().toLocaleString()
+      const validateInput = (inputName, condition) => {
+        const inputEl = form.querySelector(`[name="${inputName}"]`);
+        if (!condition) {
+          isValid = false;
+          if (inputEl) {
+            inputEl.classList.add('input-error');
+            if (!firstInvalidInput) firstInvalidInput = inputEl;
+          }
+        } else if (inputEl) {
+          inputEl.classList.remove('input-error');
+        }
       };
 
-      // Save to localStorage
-      try {
-        const existingBookings = JSON.parse(localStorage.getItem('apex_bookings') || '[]');
-        existingBookings.push(bookingData);
-        localStorage.setItem('apex_bookings', JSON.stringify(existingBookings));
-        console.log('Booking saved:', bookingData);
-      } catch (err) {
-        console.error('Storage error:', err);
+      validateInput('name', name.length >= 2);
+      validateInput('phone', phone.length >= 7);
+      validateInput('email', /\S+@\S+\.\S+/.test(email));
+      validateInput('destination', destination.length > 0);
+      validateInput('mode', mode.length > 0);
+      validateInput('preferredDate', preferredDate.length > 0);
+      validateInput('timeSlot', timeSlot.length > 0);
+      validateInput('qualification', qualification.length > 0);
+
+      if (!isValid) {
+        if (firstInvalidInput) firstInvalidInput.focus();
+        showToast({
+          type: 'error',
+          title: 'Validation Error',
+          message: 'Please complete all required fields marked with * before submitting.'
+        });
+        return;
       }
 
-      // Show success message
-      const successMsg = `✅ Success!\n\nYour appointment has been confirmed.\n\nReference: ${refNumber}\nDate: ${preferredDate}\nTime: ${timeSlot}\n\nYou will receive an email confirmation shortly.`;
-      alert(successMsg);
+      const submitBtn = form.querySelector('button[type="submit"]') || form.querySelector('.btn-primary');
+      const originalText = submitBtn ? submitBtn.innerHTML : 'Confirm Appointment Booking';
 
-      // Reset form
-      form.reset();
-      
-      // Restore button
       if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = true;
+        submitBtn.classList.add('btn-loading');
+        submitBtn.innerHTML = `<span class="btn-spinner"></span> Confirming Appointment...`;
       }
-    }, 1000);
+
+      setTimeout(() => {
+        const refNumber = 'APX-' + Math.floor(100000 + Math.random() * 900000);
+
+        const bookingData = {
+          refNumber,
+          name,
+          phone,
+          email,
+          destination,
+          mode,
+          preferredDate,
+          timeSlot,
+          qualification,
+          notes,
+          createdAt: new Date().toLocaleString()
+        };
+
+        try {
+          const existing = JSON.parse(localStorage.getItem('apex_bookings') || '[]');
+          existing.push(bookingData);
+          localStorage.setItem('apex_bookings', JSON.stringify(existing));
+        } catch (err) {
+          console.error('Storage error:', err);
+        }
+
+        if (submitBtn) {
+          submitBtn.classList.remove('btn-loading');
+          submitBtn.classList.add('btn-success-state');
+          submitBtn.innerHTML = `✓ Booking Confirmed!`;
+        }
+
+        showToast({
+          type: 'success',
+          title: 'Booking confirmed!',
+          message: `Booking/Reference Number: ${refNumber}. We look forward to meeting you!`
+        });
+
+        showFeedbackModal({
+          title: 'Booking confirmed!',
+          subtitle: 'Your 1-on-1 counseling session has been successfully scheduled.',
+          refNumber,
+          icon: '🎓',
+          details: [
+            { label: 'Applicant Name', value: name },
+            { label: 'Target Destination', value: destination },
+            { label: 'Counseling Mode', value: mode },
+            { label: 'Date', value: preferredDate },
+            { label: 'Time Slot', value: timeSlot },
+            { label: 'Qualification', value: qualification }
+          ]
+        });
+
+        setTimeout(() => {
+          form.reset();
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('btn-success-state');
+            submitBtn.innerHTML = originalText;
+          }
+        }, 2500);
+      }, 900);
+    });
   });
 }
 
@@ -400,93 +594,318 @@ function initBookingForm() {
    Contact Form Functionality (AJAX with localStorage demo)
    -------------------------------------------------------------------------- */
 function initContactForm() {
-  const form = document.querySelector('.ajax-contact-form');
-  if (!form) return;
+  const forms = document.querySelectorAll('.ajax-contact-form, #contactForm');
+  if (!forms.length) return;
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
+  forms.forEach(form => {
+    form.querySelectorAll('input, select, textarea').forEach(input => {
+      input.addEventListener('input', () => input.classList.remove('input-error'));
+      input.addEventListener('change', () => input.classList.remove('input-error'));
+    });
 
-    // Get form values by name
-    const formData = new FormData(form);
-    const name = formData.get('name')?.trim() || '';
-    const email = formData.get('email')?.trim() || '';
-    const phone = formData.get('phone')?.trim() || '';
-    const destination = formData.get('destination')?.trim() || '';
-    const message = formData.get('message')?.trim() || '';
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
 
-    // Validation
-    let isValid = true;
-    let errorMsg = '';
+      const formData = new FormData(form);
+      const name = formData.get('name')?.toString().trim() || '';
+      const email = formData.get('email')?.toString().trim() || '';
+      const phone = formData.get('phone')?.toString().trim() || '';
+      const destination = formData.get('destination')?.toString().trim() || '';
+      const message = formData.get('message')?.toString().trim() || '';
 
-    if (!name) {
-      errorMsg = 'Please enter your full name';
-      isValid = false;
-    } else if (!email || !/\S+@\S+\.\S+/.test(email)) {
-      errorMsg = 'Please enter a valid email address';
-      isValid = false;
-    } else if (!phone) {
-      errorMsg = 'Please enter your phone number';
-      isValid = false;
-    } else if (!destination) {
-      errorMsg = 'Please select a destination country';
-      isValid = false;
-    } else if (!message || message.length < 10) {
-      errorMsg = 'Please enter a message (at least 10 characters)';
-      isValid = false;
+      let isValid = true;
+      let firstInvalidInput = null;
+
+      const validateInput = (inputName, condition) => {
+        const inputEl = form.querySelector(`[name="${inputName}"]`);
+        if (!condition) {
+          isValid = false;
+          if (inputEl) {
+            inputEl.classList.add('input-error');
+            if (!firstInvalidInput) firstInvalidInput = inputEl;
+          }
+        } else if (inputEl) {
+          inputEl.classList.remove('input-error');
+        }
+      };
+
+      validateInput('name', name.length >= 2);
+      validateInput('email', /\S+@\S+\.\S+/.test(email));
+      validateInput('phone', phone.length >= 7);
+      validateInput('destination', destination.length > 0);
+      validateInput('message', message.length >= 10);
+
+      if (!isValid) {
+        if (firstInvalidInput) firstInvalidInput.focus();
+        showToast({
+          type: 'error',
+          title: 'Validation Error',
+          message: 'Please complete all required fields with valid details (message min 10 characters).'
+        });
+        return;
+      }
+
+      const submitBtn = form.querySelector('button[type="submit"]') || form.querySelector('.btn-primary');
+      const originalText = submitBtn ? submitBtn.innerHTML : 'Submit Inquiry';
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.classList.add('btn-loading');
+        submitBtn.innerHTML = `<span class="btn-spinner"></span> Sending Message...`;
+      }
+
+      setTimeout(() => {
+        const refNumber = 'MSG-' + Math.floor(100000 + Math.random() * 900000);
+
+        const contactData = {
+          refNumber,
+          name,
+          email,
+          phone,
+          destination,
+          message,
+          createdAt: new Date().toLocaleString()
+        };
+
+        try {
+          const existing = JSON.parse(localStorage.getItem('apex_messages') || '[]');
+          existing.push(contactData);
+          localStorage.setItem('apex_messages', JSON.stringify(existing));
+        } catch (err) {
+          console.error('Storage error:', err);
+        }
+
+        if (submitBtn) {
+          submitBtn.classList.remove('btn-loading');
+          submitBtn.classList.add('btn-success-state');
+          submitBtn.innerHTML = `✓ Message Sent!`;
+        }
+
+        showToast({
+          type: 'success',
+          title: 'Message sent successfully!',
+          message: `Reference #: ${refNumber}. Thank you for contacting Apex Abroad. Our team will respond within 24 hours.`
+        });
+
+        showFeedbackModal({
+          title: 'Message sent successfully!',
+          subtitle: 'Our educational counselors will review your message and reach out shortly.',
+          refNumber,
+          icon: '✉️',
+          details: [
+            { label: 'Full Name', value: name },
+            { label: 'Email', value: email },
+            { label: 'Phone', value: phone },
+            { label: 'Target Country', value: destination }
+          ]
+        });
+
+        setTimeout(() => {
+          form.reset();
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('btn-success-state');
+            submitBtn.innerHTML = originalText;
+          }
+        }, 2500);
+      }, 900);
+    });
+  });
+}
+
+/* --------------------------------------------------------------------------
+   Newsletter / Signup Form Handler
+   -------------------------------------------------------------------------- */
+function initNewsletterForm() {
+  const forms = document.querySelectorAll('.newsletter-form, .subscribe-form, #newsletterForm');
+
+  forms.forEach(form => {
+    const input = form.querySelector('input[type="email"]');
+    if (input) {
+      input.addEventListener('input', () => input.classList.remove('input-error'));
     }
 
-    if (!isValid) {
-      alert(errorMsg);
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const email = input ? input.value.trim() : '';
+
+      if (!email || !/\S+@\S+\.\S+/.test(email)) {
+        if (input) {
+          input.classList.add('input-error');
+          input.focus();
+        }
+        showToast({
+          type: 'error',
+          title: 'Validation Error',
+          message: 'Please enter a valid email address to subscribe.'
+        });
+        return;
+      }
+
+      const submitBtn = form.querySelector('button[type="submit"]') || form.querySelector('button');
+      const originalText = submitBtn ? submitBtn.innerHTML : 'Subscribe';
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.classList.add('btn-loading');
+        submitBtn.innerHTML = `<span class="btn-spinner"></span> Subscribing...`;
+      }
+
+      setTimeout(() => {
+        try {
+          const subscribers = JSON.parse(localStorage.getItem('apex_subscribers') || '[]');
+          if (!subscribers.includes(email)) {
+            subscribers.push(email);
+            localStorage.setItem('apex_subscribers', JSON.stringify(subscribers));
+          }
+        } catch (err) {
+          console.error('Storage error:', err);
+        }
+
+        if (submitBtn) {
+          submitBtn.classList.remove('btn-loading');
+          submitBtn.classList.add('btn-success-state');
+          submitBtn.innerHTML = `✓ Subscribed!`;
+        }
+
+        showToast({
+          type: 'success',
+          title: 'Subscribed Successfully!',
+          message: 'Thank you for subscribing to Apex Abroad! You will receive the latest study abroad news and scholarship updates.'
+        });
+
+        setTimeout(() => {
+          form.reset();
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('btn-success-state');
+            submitBtn.innerHTML = originalText;
+          }
+        }, 2000);
+      }, 800);
+    });
+  });
+}
+
+/* --------------------------------------------------------------------------
+   Universal Visible Feedback for Every Button / Action Link
+   -------------------------------------------------------------------------- */
+function initGlobalActionFeedback() {
+  document.addEventListener('click', (e) => {
+    const target = e.target.closest('button, a, .btn, [data-action]');
+    if (!target) return;
+
+    target.classList.add('btn-click-effect');
+    setTimeout(() => target.classList.remove('btn-click-effect'), 150);
+
+    const href = target.getAttribute('href') || '';
+    const text = target.innerText ? target.innerText.trim() : '';
+
+    if (target.type === 'submit' && target.closest('form')) {
       return;
     }
 
-    // Show loading state
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const originalText = submitBtn?.innerHTML;
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = 'Sending... ⏳';
+    // Tel Links
+    if (href.startsWith('tel:')) {
+      const phoneNum = href.replace('tel:', '');
+      try { navigator.clipboard.writeText(phoneNum); } catch(err) {}
+      showToast({
+        type: 'info',
+        title: 'Calling Apex Abroad',
+        message: `Connecting to ${phoneNum}. Phone number copied to clipboard.`
+      });
+      return;
     }
 
-    // Simulate API call with setTimeout
-    setTimeout(() => {
-      // Generate reference ID
-      const refNumber = 'MSG-' + Date.now().toString().slice(-8).toUpperCase();
+    // Mailto Links
+    if (href.startsWith('mailto:')) {
+      const emailAddr = href.replace('mailto:', '');
+      showToast({
+        type: 'info',
+        title: 'Opening Email Client',
+        message: `Preparing inquiry email to ${emailAddr}...`
+      });
+      return;
+    }
 
-      // Create message data
-      const messageData = {
-        refNumber,
-        name,
-        email,
-        phone,
-        destination,
-        message,
-        createdAt: new Date().toLocaleString()
-      };
+    // Download buttons
+    if (text.toLowerCase().includes('download') || target.hasAttribute('download')) {
+      e.preventDefault();
+      const docTitle = text.replace(/[^a-zA-Z0-9\s]/g, '') || 'Guide Document';
 
-      // Save to localStorage
-      try {
-        const existingMessages = JSON.parse(localStorage.getItem('apex_messages') || '[]');
-        existingMessages.push(messageData);
-        localStorage.setItem('apex_messages', JSON.stringify(existingMessages));
-        console.log('Message saved:', messageData);
-      } catch (err) {
-        console.error('Storage error:', err);
+      const originalHtml = target.innerHTML;
+      target.style.pointerEvents = 'none';
+      target.innerHTML = `<span class="btn-spinner btn-spinner-dark"></span> Downloading...`;
+
+      setTimeout(() => {
+        target.style.pointerEvents = 'auto';
+        target.innerHTML = originalHtml;
+        showToast({
+          type: 'success',
+          title: 'Document Downloaded',
+          message: `📄 "${docTitle}" has been saved to your device.`
+        });
+      }, 800);
+      return;
+    }
+
+    // Check Eligibility buttons
+    if (text.toLowerCase().includes('check eligibility')) {
+      e.preventDefault();
+      const originalHtml = target.innerHTML;
+      target.style.pointerEvents = 'none';
+      target.innerHTML = `<span class="btn-spinner btn-spinner-dark"></span> Checking Eligibility...`;
+
+      setTimeout(() => {
+        target.style.pointerEvents = 'auto';
+        target.innerHTML = originalHtml;
+        showToast({
+          type: 'success',
+          title: 'Eligibility Criteria Met!',
+          message: 'Your background meets initial entry guidelines! Book a free consultation to submit your application.'
+        });
+      }, 750);
+      return;
+    }
+
+    // Request Information / Trial Class / Assessment
+    if (text.toLowerCase().includes('request') || text.toLowerCase().includes('trial class') || text.toLowerCase().includes('assessment')) {
+      if (href && href !== '#' && !href.startsWith('javascript:')) {
+        showToast({
+          type: 'info',
+          title: 'Action Initiated',
+          message: 'Redirecting to complete your counseling registration...'
+        });
+        return;
       }
+      e.preventDefault();
+      const originalHtml = target.innerHTML;
+      target.style.pointerEvents = 'none';
+      target.innerHTML = `<span class="btn-spinner"></span> Processing Request...`;
 
-      // Show success message
-      const successMsg = `✅ Message Sent!\n\nThank you for contacting Apex Abroad.\n\nReference: ${refNumber}\n\nOur team will respond within 24 hours.\nCheck your email for updates.`;
-      alert(successMsg);
+      setTimeout(() => {
+        target.style.pointerEvents = 'auto';
+        target.innerHTML = originalHtml;
+        showToast({
+          type: 'success',
+          title: 'Request Submitted!',
+          message: 'Thank you! Our advisory team will send detailed information to your email.'
+        });
+      }, 800);
+      return;
+    }
 
-      // Reset form
-      form.reset();
-      
-      // Restore button
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
-      }
-    }, 1000);
+    // Empty or Javascript Links
+    if (href === '#' || href === 'javascript:void(0)' || href === 'javascript:;') {
+      e.preventDefault();
+      showToast({
+        type: 'info',
+        title: 'Action Triggered',
+        message: text ? `"${text}" completed successfully.` : 'Action processed.'
+      });
+      return;
+    }
   });
 }
 
@@ -507,6 +926,12 @@ function initBackToTop() {
 
   btn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    showToast({
+      type: 'info',
+      title: 'Scrolled to Top',
+      message: 'Returned to the top of the page.',
+      duration: 2000
+    });
   });
 }
 
