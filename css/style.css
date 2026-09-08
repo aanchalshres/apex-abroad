@@ -416,6 +416,7 @@ ul, ol {
   background-color: var(--color-bg-white);
   color: var(--color-navy);
   border-color: #CBD5E1;
+  font-size: 13px;
 }
 
 .btn-outline:hover {
@@ -584,14 +585,14 @@ ul, ol {
   gap: 8px;
   background-color: var(--color-bg-subtle);
   border: 1px solid var(--color-border);
-  padding: 6px 14px;
+  padding: 7px 15px;
   border-radius: var(--radius-full);
   font-size: 12px;
   font-weight: 700;
   color: var(--color-text-muted);
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .badge-dot {
@@ -604,19 +605,19 @@ ul, ol {
 }
 
 .hero-title {
-  font-size: 54px;
+  font-size: 52px;
   font-weight: 800;
   color: var(--color-navy);
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  margin-bottom: 20px;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  margin-bottom: 22px;
 }
 
 .hero-description {
-  font-size: 17px;
+  font-size: 16px;
   color: var(--color-text-muted);
-  line-height: 1.6;
-  max-width: 520px;
+  line-height: 1.65;
+  max-width: 540px;
   margin-bottom: 32px;
 }
 
@@ -779,17 +780,19 @@ ul, ol {
 }
 
 .section-title {
-  font-size: 32px;
+  font-size: 38px;
   font-weight: 800;
   color: var(--color-navy);
-  letter-spacing: -0.02em;
-  margin-bottom: 12px;
+  letter-spacing: -0.025em;
+  margin-bottom: 16px;
+  line-height: 1.15;
 }
 
 .section-subtitle {
   font-size: 16px;
   color: var(--color-text-muted);
-  line-height: 1.6;
+  line-height: 1.65;
+  font-weight: 500;
 }
 
 /* Services 8-card grid matching reference */
@@ -803,13 +806,13 @@ ul, ol {
   background: var(--color-bg-white);
   border: 1px solid var(--color-border-light);
   border-radius: var(--radius-lg);
-  padding: 22px 14px;
+  padding: 24px 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   transition: var(--transition);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   position: relative;
   text-decoration: none;
 }
@@ -845,11 +848,11 @@ ul, ol {
 }
 
 .service-card-title {
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--color-navy);
   margin-bottom: 8px;
-  line-height: 1.25;
+  line-height: 1.3;
 }
 
 .service-card-desc {
@@ -879,19 +882,20 @@ ul, ol {
 }
 
 .destinations-title {
-  font-size: 34px;
+  font-size: 36px;
   font-weight: 800;
   color: var(--color-navy);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  margin-bottom: 14px;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  margin-bottom: 16px;
 }
 
 .destinations-desc {
-  font-size: 15px;
+  font-size: 16px;
   color: var(--color-text-muted);
-  line-height: 1.6;
+  line-height: 1.65;
   margin-bottom: 24px;
+  font-weight: 500;
 }
 
 .destinations-link {
@@ -1140,17 +1144,19 @@ ul, ol {
 }
 
 .step-title {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 800;
   color: var(--color-navy);
   margin-bottom: 8px;
+  line-height: 1.3;
 }
 
 .step-description {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--color-text-muted);
-  line-height: 1.5;
+  line-height: 1.55;
   max-width: 190px;
+  font-weight: 500;
 }
 
 /* ==========================================================================
@@ -1209,11 +1215,12 @@ ul, ol {
 }
 
 .testimonial-text {
-  font-size: 13.5px;
+  font-size: 14px;
   color: var(--color-text);
-  line-height: 1.55;
+  line-height: 1.6;
   margin-bottom: 20px;
   font-style: italic;
+  font-weight: 500;
 }
 
 .testimonial-author {
@@ -1425,10 +1432,11 @@ ul, ol {
 }
 
 .cta-banner-heading {
-  font-size: 34px;
+  font-size: 36px;
   font-weight: 800;
-  line-height: 1.2;
+  line-height: 1.25;
   color: #ffffff;
+  letter-spacing: -0.025em;
 }
 
 .cta-banner-sub {
@@ -1515,10 +1523,11 @@ ul, ol {
 }
 
 .footer-col-title {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 800;
   color: var(--color-navy);
-  margin-bottom: 18px;
+  margin-bottom: 20px;
+  letter-spacing: -0.01em;
 }
 
 .footer-links-list {
@@ -1528,9 +1537,10 @@ ul, ol {
 }
 
 .footer-link {
-  font-size: 13.5px;
+  font-size: 14px;
   color: var(--color-text-muted);
   transition: var(--transition-fast);
+  font-weight: 500;
 }
 
 .footer-link:hover {
@@ -1548,9 +1558,10 @@ ul, ol {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  font-size: 13.5px;
+  font-size: 14px;
   color: var(--color-text-muted);
-  line-height: 1.4;
+  line-height: 1.5;
+  font-weight: 500;
 }
 
 .contact-info-item svg {
