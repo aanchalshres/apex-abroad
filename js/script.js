@@ -286,224 +286,207 @@ function initStatsCounter() {
 }
 
 /* --------------------------------------------------------------------------
-   Booking Counseling Form
+   Booking Counseling Form (AJAX with localStorage demo)
    -------------------------------------------------------------------------- */
 function initBookingForm() {
-  const form = document.getElementById('counselingBookingForm');
+  const form = document.querySelector('.ajax-booking-form');
   if (!form) return;
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    let isValid = true;
-    const getVal = (id) => (form.querySelector(`#${id}`) ? form.querySelector(`#${id}`).value.trim() : '');
-    const showError = (id, msg) => {
-      const errEl = form.querySelector(`#${id}Error`);
-      if (errEl) {
-        errEl.textContent = msg;
-        errEl.classList.add('visible');
-      }
-      isValid = false;
-    };
-    const clearError = (id) => {
-      const errEl = form.querySelector(`#${id}Error`);
-      if (errEl) {
-        errEl.textContent = '';
-        errEl.classList.remove('visible');
-      }
-    };
-
-    // Fields
-    const fullName = getVal('fullName');
-    const email = getVal('email');
-    const phone = getVal('phone');
-    const preferredCountry = getVal('preferredCountry');
-    const interestedCourse = getVal('interestedCourse');
-    const preferredDate = getVal('preferredDate');
-    const preferredTime = getVal('preferredTime');
-    const message = getVal('message');
+    // Get form values by name
+    const formData = new FormData(form);
+    const name = formData.get('name')?.trim() || '';
+    const phone = formData.get('phone')?.trim() || '';
+    const email = formData.get('email')?.trim() || '';
+    const destination = formData.get('destination')?.trim() || '';
+    const mode = formData.get('mode')?.trim() || '';
+    const preferredDate = formData.get('preferredDate')?.trim() || '';
+    const timeSlot = formData.get('timeSlot')?.trim() || '';
+    const qualification = formData.get('qualification')?.trim() || '';
+    const notes = formData.get('notes')?.trim() || '';
 
     // Validation
-    if (!fullName) showError('fullName', 'Please enter your full name');
-    else clearError('fullName');
+    let isValid = true;
+    let errorMsg = '';
 
-    if (!email || !/\S+@\S+\.\S+/.test(email)) showError('email', 'Please provide a valid email address');
-    else clearError('email');
-
-    if (!phone || phone.length < 7) showError('phone', 'Please enter a valid phone number');
-    else clearError('phone');
-
-    if (!preferredCountry) showError('preferredCountry', 'Please select your preferred study destination');
-    else clearError('preferredCountry');
-
-    if (!interestedCourse) showError('interestedCourse', 'Please select a test prep or course');
-    else clearError('interestedCourse');
-
-    if (!preferredDate) showError('preferredDate', 'Please choose a preferred consultation date');
-    else clearError('preferredDate');
-
-    if (!preferredTime) showError('preferredTime', 'Please choose a preferred time slot');
-    else clearError('preferredTime');
-
-    if (!isValid) return;
-
-    // Loading State
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const originalText = submitBtn ? submitBtn.innerHTML : 'Submit';
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = `
-        <svg class="animate-spin" style="width:16px;height:16px;animation:spin 1s linear infinite;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle>
-          <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"></path>
-        </svg>
-        Scheduling Session...
-      `;
+    if (!name) {
+      errorMsg = 'Please enter your full name';
+      isValid = false;
+    } else if (!phone || phone.length < 7) {
+      errorMsg = 'Please enter a valid phone number';
+      isValid = false;
+    } else if (!email || !/\S+@\S+\.\S+/.test(email)) {
+      errorMsg = 'Please enter a valid email address';
+      isValid = false;
+    } else if (!destination) {
+      errorMsg = 'Please select a destination country';
+      isValid = false;
+    } else if (!mode) {
+      errorMsg = 'Please select a counseling mode';
+      isValid = false;
+    } else if (!preferredDate) {
+      errorMsg = 'Please select a preferred date';
+      isValid = false;
+    } else if (!timeSlot) {
+      errorMsg = 'Please select a time slot';
+      isValid = false;
+    } else if (!qualification) {
+      errorMsg = 'Please select your qualification';
+      isValid = false;
     }
 
+    if (!isValid) {
+      alert(errorMsg);
+      return;
+    }
+
+    // Show loading state
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn?.innerHTML;
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Processing... ⏳';
+    }
+
+    // Simulate API call with setTimeout
     setTimeout(() => {
       // Generate reference ID
-      const refNumber = 'APX-' + Math.floor(100000 + Math.random() * 900000);
+      const refNumber = 'APX-' + Date.now().toString().slice(-8).toUpperCase();
+
+      // Create booking data
       const bookingData = {
         refNumber,
-        fullName,
-        email,
+        name,
         phone,
-        preferredCountry,
-        interestedCourse,
+        email,
+        destination,
+        mode,
         preferredDate,
-        preferredTime,
-        message,
-        createdAt: new Date().toISOString()
+        timeSlot,
+        qualification,
+        notes,
+        createdAt: new Date().toLocaleString()
       };
 
       // Save to localStorage
       try {
-        const saved = JSON.parse(localStorage.getItem('apex_counseling_bookings') || '[]');
-        saved.unshift(bookingData);
-        localStorage.setItem('apex_counseling_bookings', JSON.stringify(saved));
+        const existingBookings = JSON.parse(localStorage.getItem('apex_bookings') || '[]');
+        existingBookings.push(bookingData);
+        localStorage.setItem('apex_bookings', JSON.stringify(existingBookings));
+        console.log('Booking saved:', bookingData);
       } catch (err) {
-        console.error('Storage error', err);
+        console.error('Storage error:', err);
       }
 
-      // Show Success Card
-      const successCard = document.getElementById('bookingSuccessState');
-      const refBadge = document.getElementById('bookingRefCode');
-      const clientNameBadge = document.getElementById('bookingClientName');
-      const clientDateBadge = document.getElementById('bookingDateSlot');
+      // Show success message
+      const successMsg = `✅ Success!\n\nYour appointment has been confirmed.\n\nReference: ${refNumber}\nDate: ${preferredDate}\nTime: ${timeSlot}\n\nYou will receive an email confirmation shortly.`;
+      alert(successMsg);
 
-      if (successCard) {
-        if (refBadge) refBadge.textContent = refNumber;
-        if (clientNameBadge) clientNameBadge.textContent = fullName;
-        if (clientDateBadge) clientDateBadge.textContent = `${preferredDate} at ${preferredTime}`;
-
-        form.style.display = 'none';
-        successCard.style.display = 'block';
-        successCard.scrollIntoView({ behavior: 'smooth' });
-      }
-
+      // Reset form
       form.reset();
+      
+      // Restore button
       if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalText;
       }
-    }, 900);
+    }, 1000);
   });
 }
 
 /* --------------------------------------------------------------------------
-   Contact Form Functionality
+   Contact Form Functionality (AJAX with localStorage demo)
    -------------------------------------------------------------------------- */
 function initContactForm() {
-  const form = document.getElementById('contactForm');
+  const form = document.querySelector('.ajax-contact-form');
   if (!form) return;
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
+    // Get form values by name
+    const formData = new FormData(form);
+    const name = formData.get('name')?.trim() || '';
+    const email = formData.get('email')?.trim() || '';
+    const phone = formData.get('phone')?.trim() || '';
+    const destination = formData.get('destination')?.trim() || '';
+    const message = formData.get('message')?.trim() || '';
+
+    // Validation
     let isValid = true;
-    const getVal = (id) => (form.querySelector(`#${id}`) ? form.querySelector(`#${id}`).value.trim() : '');
-    const showError = (id, msg) => {
-      const errEl = form.querySelector(`#${id}Error`);
-      if (errEl) {
-        errEl.textContent = msg;
-        errEl.classList.add('visible');
-      }
+    let errorMsg = '';
+
+    if (!name) {
+      errorMsg = 'Please enter your full name';
       isValid = false;
-    };
-    const clearError = (id) => {
-      const errEl = form.querySelector(`#${id}Error`);
-      if (errEl) {
-        errEl.textContent = '';
-        errEl.classList.remove('visible');
-      }
-    };
-
-    const name = getVal('contactName');
-    const email = getVal('contactEmail');
-    const phone = getVal('contactPhone');
-    const subject = getVal('contactSubject');
-    const message = getVal('contactMessage');
-
-    if (!name) showError('contactName', 'Please enter your name');
-    else clearError('contactName');
-
-    if (!email || !/\S+@\S+\.\S+/.test(email)) showError('contactEmail', 'Please enter a valid email address');
-    else clearError('contactEmail');
-
-    if (!phone) showError('contactPhone', 'Please enter your contact phone');
-    else clearError('contactPhone');
-
-    if (!subject) showError('contactSubject', 'Please enter a subject');
-    else clearError('contactSubject');
-
-    if (!message || message.length < 5) showError('contactMessage', 'Please write your message');
-    else clearError('contactMessage');
-
-    if (!isValid) return;
-
-    // Loading state
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const origText = submitBtn ? submitBtn.innerHTML : 'Send Message';
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = 'Sending Message...';
+    } else if (!email || !/\S+@\S+\.\S+/.test(email)) {
+      errorMsg = 'Please enter a valid email address';
+      isValid = false;
+    } else if (!phone) {
+      errorMsg = 'Please enter your phone number';
+      isValid = false;
+    } else if (!destination) {
+      errorMsg = 'Please select a destination country';
+      isValid = false;
+    } else if (!message || message.length < 10) {
+      errorMsg = 'Please enter a message (at least 10 characters)';
+      isValid = false;
     }
 
+    if (!isValid) {
+      alert(errorMsg);
+      return;
+    }
+
+    // Show loading state
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn?.innerHTML;
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Sending... ⏳';
+    }
+
+    // Simulate API call with setTimeout
     setTimeout(() => {
-      const refNumber = 'APX-MSG-' + Math.floor(10000 + Math.random() * 90000);
-      const contactData = {
+      // Generate reference ID
+      const refNumber = 'MSG-' + Date.now().toString().slice(-8).toUpperCase();
+
+      // Create message data
+      const messageData = {
         refNumber,
         name,
         email,
         phone,
-        subject,
+        destination,
         message,
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toLocaleString()
       };
 
+      // Save to localStorage
       try {
-        const messages = JSON.parse(localStorage.getItem('apex_contact_messages') || '[]');
-        messages.unshift(contactData);
-        localStorage.setItem('apex_contact_messages', JSON.stringify(messages));
+        const existingMessages = JSON.parse(localStorage.getItem('apex_messages') || '[]');
+        existingMessages.push(messageData);
+        localStorage.setItem('apex_messages', JSON.stringify(existingMessages));
+        console.log('Message saved:', messageData);
       } catch (err) {
-        console.error('Storage error', err);
+        console.error('Storage error:', err);
       }
 
-      const successBox = document.getElementById('contactSuccessBox');
-      const refSpan = document.getElementById('contactRefNumber');
-      if (successBox) {
-        if (refSpan) refSpan.textContent = refNumber;
-        form.style.display = 'none';
-        successBox.style.display = 'block';
-      }
+      // Show success message
+      const successMsg = `✅ Message Sent!\n\nThank you for contacting Apex Abroad.\n\nReference: ${refNumber}\n\nOur team will respond within 24 hours.\nCheck your email for updates.`;
+      alert(successMsg);
 
+      // Reset form
       form.reset();
+      
+      // Restore button
       if (submitBtn) {
         submitBtn.disabled = false;
-        submitBtn.innerHTML = origText;
+        submitBtn.innerHTML = originalText;
       }
-    }, 800);
+    }, 1000);
   });
 }
 
