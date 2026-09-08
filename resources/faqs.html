@@ -4,33 +4,135 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Frequently Asked Questions (FAQs) - Apex Abroad</title>
-  <meta name="description" content="Common questions and answers regarding study abroad, visa requirements, IELTS/PTE scores, bank balance evidence, and education loans." />
+  <meta name="description" content="Common questions and detailed answers regarding study abroad admissions, study gaps, Nepal bank balance evidence, education loans, IELTS/PTE scores, visa processing, and post-study work rights." />
   <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
-  <header class="site-header">
+
+  <!-- Site Header -->
+  <header class="site-header" id="siteHeader">
     <div class="container header-container">
-      <a href="/index.html" class="brand-logo">
-        <div class="brand-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 22h4.5l5.5-12 5.5 12H22L12 2zm0 6l3.2 7h-6.4L12 8z"/></svg></div>
-        <div class="brand-text"><span class="brand-title">Apex Abroad</span><span class="brand-tagline">Your Future. Our Guidance.</span></div>
+      <!-- Logo -->
+      <a href="/index.html" class="brand-logo" id="headerBrandLogo" aria-label="Apex Abroad Home">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L2 22h4.5l5.5-12 5.5 12H22L12 2zm0 6l3.2 7h-6.4L12 8z"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Apex Abroad</span>
+          <span class="brand-tagline">Your Future. Our Guidance.</span>
+        </div>
       </a>
-      <nav class="main-nav">
+
+      <!-- Desktop Navigation -->
+      <nav class="main-nav" id="mainNavigation" aria-label="Main Navigation">
         <ul class="nav-list">
-          <li class="nav-item"><a href="/index.html" class="nav-link">Home</a></li>
-          <li class="nav-item"><a href="/about.html" class="nav-link">About Us</a></li>
-          <li class="nav-item"><a href="/services.html" class="nav-link">Services</a></li>
-          <li class="nav-item"><a href="/destinations.html" class="nav-link">Destinations</a></li>
+          <li class="nav-item">
+            <a href="/index.html" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="/about.html" class="nav-link">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a href="/services.html" class="nav-link">
+              Services
+              <svg class="dropdown-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M6 9l6 6 6-6"/>
+              </svg>
+            </a>
+            <div class="dropdown-menu">
+              <a href="/services/ielts.html" class="dropdown-item">
+                <span class="item-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path><line x1="9" y1="7" x2="15" y2="7"></line><line x1="9" y1="11" x2="15" y2="11"></line></svg></span> IELTS Preparation
+              </a>
+              <a href="/services/pte.html" class="dropdown-item">
+                <span class="item-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line><path d="M7 8h10"></path><path d="M7 12h6"></path></svg></span> PTE Preparation
+              </a>
+              <a href="/services/sat.html" class="dropdown-item">
+                <span class="item-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg></span> SAT Preparation
+              </a>
+              <a href="/services/study-abroad-counseling.html" class="dropdown-item">
+                <span class="item-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></span> Study Abroad Counseling
+              </a>
+              <a href="/services/application-assistance.html" class="dropdown-item">
+                <span class="item-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><polyline points="9 15 11 17 15 13"></polyline></svg></span> Application Assistance
+              </a>
+              <a href="/services/visa-guidance.html" class="dropdown-item">
+                <span class="item-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2" ry="2"></rect><circle cx="9" cy="10" r="2"></circle><path d="M15 8h2"></path><path d="M15 12h2"></path><path d="M7 16h10"></path></svg></span> Visa Guidance
+              </a>
+              <a href="/services/pre-departure-support.html" class="dropdown-item">
+                <span class="item-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.6.5-1.1z"></path></svg></span> Pre-Departure Support
+              </a>
+              <a href="/services/scholarship-support.html" class="dropdown-item">
+                <span class="item-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg></span> Scholarship Support
+              </a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a href="/destinations.html" class="nav-link">
+              Destinations
+              <svg class="dropdown-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M6 9l6 6 6-6"/>
+              </svg>
+            </a>
+            <div class="dropdown-menu">
+              <a href="/destinations/australia.html" class="dropdown-item"><span class="item-flag"><img src="/images/flags/au.svg" alt="" class="flag-icon-sm" /></span> Australia</a>
+              <a href="/destinations/canada.html" class="dropdown-item"><span class="item-flag"><img src="/images/flags/ca.svg" alt="" class="flag-icon-sm" /></span> Canada</a>
+              <a href="/destinations/uk.html" class="dropdown-item"><span class="item-flag"><img src="/images/flags/gb.svg" alt="" class="flag-icon-sm" /></span> United Kingdom</a>
+              <a href="/destinations/usa.html" class="dropdown-item"><span class="item-flag"><img src="/images/flags/us.svg" alt="" class="flag-icon-sm" /></span> United States</a>
+              <a href="/destinations/new-zealand.html" class="dropdown-item"><span class="item-flag"><img src="/images/flags/nz.svg" alt="" class="flag-icon-sm" /></span> New Zealand</a>
+              <a href="/destinations/germany.html" class="dropdown-item"><span class="item-flag"><img src="/images/flags/de.svg" alt="" class="flag-icon-sm" /></span> Germany</a>
+              <a href="/destinations/japan.html" class="dropdown-item"><span class="item-flag"><img src="/images/flags/jp.svg" alt="" class="flag-icon-sm" /></span> Japan</a>
+              <a href="/destinations/ireland.html" class="dropdown-item"><span class="item-flag"><img src="/images/flags/ie.svg" alt="" class="flag-icon-sm" /></span> Ireland</a>
+            </div>
+          </li>
           <li class="nav-item"><a href="/courses.html" class="nav-link">Courses</a></li>
           <li class="nav-item"><a href="/success-stories.html" class="nav-link">Success Stories</a></li>
-          <li class="nav-item"><a href="/resources.html" class="nav-link active">Resources</a></li>
+          <li class="nav-item">
+            <a href="/resources.html" class="nav-link active">
+              Resources
+              <svg class="dropdown-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M6 9l6 6 6-6"/>
+              </svg>
+            </a>
+            <div class="dropdown-menu">
+              <a href="/resources/blogs.html" class="dropdown-item">
+                <span class="item-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"></path><path d="M18 14h-8"></path><path d="M18 18h-8"></path><path d="M18 6h-8"></path></svg></span> Blogs & News
+              </a>
+              <a href="/resources/country-guides.html" class="dropdown-item">
+                <span class="item-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg></span> Country Guides
+              </a>
+              <a href="/resources/university-rankings.html" class="dropdown-item">
+                <span class="item-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"></path></svg></span> University Rankings
+              </a>
+              <a href="/resources/scholarships.html" class="dropdown-item">
+                <span class="item-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></span> Scholarships Guide
+              </a>
+              <a href="/resources/faqs.html" class="dropdown-item">
+                <span class="item-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span> Frequently Asked Questions
+              </a>
+            </div>
+          </li>
           <li class="nav-item"><a href="/contact.html" class="nav-link">Contact</a></li>
         </ul>
       </nav>
-      <div class="header-actions"><a href="/book-counseling.html" class="btn btn-primary">Book Free Counseling</a></div>
+
+      <!-- Right CTAs -->
+      <div class="header-actions">
+        <a href="tel:01-5456789" class="phone-cta">
+          <div class="phone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <span>01-5456789</span>
+        </a>
+        <a href="/book-counseling.html" class="btn btn-primary">Book Free Counseling</a>
+        <button class="mobile-nav-toggle" aria-label="Open Navigation Menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
     </div>
   </header>
 
   <main>
+    <!-- Page Hero -->
     <section class="page-hero">
       <div class="container">
         <nav class="breadcrumbs">
@@ -40,50 +142,216 @@
         </nav>
         <span class="hero-badge"><span class="badge-dot"></span> ANSWERS TO COMMON QUESTIONS</span>
         <h1 class="page-title">Frequently Asked Questions</h1>
-        <p class="page-subtitle">Clear, accurate answers regarding study gaps, financial sponsorship from Nepal, English testing, and visa processing times.</p>
+        <p class="page-subtitle">Detailed, clear answers regarding study gaps, bank balance evidence from Nepal, education loans, IELTS/PTE scores, and visa processing times.</p>
       </div>
     </section>
 
+    <!-- FAQ Accordion Section -->
     <section class="section section-light">
-      <div class="container" style="max-width: 850px;">
-        <div class="faq-accordion" style="display: flex; flex-direction: column; gap: 16px;">
-          <div class="card" style="padding: 24px;">
-            <div class="faq-question" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-              <h3 style="font-size: 17px; font-weight: 800; color: var(--color-navy); margin:0;">How much study gap is acceptable for Australia and Canada?</h3>
-              <span class="faq-toggle-icon" style="font-size: 20px; font-weight: 700; color: var(--color-primary);">+</span>
+      <div class="container" style="max-width: 900px;">
+        
+        <!-- Category Filter Buttons -->
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 36px;">
+          <button class="btn btn-outline faq-category-btn active" data-category="all" style="padding: 8px 18px; font-size: 13px;">All Questions</button>
+          <button class="btn btn-outline faq-category-btn" data-category="admissions" style="padding: 8px 18px; font-size: 13px;">Admissions & Gaps</button>
+          <button class="btn btn-outline faq-category-btn" data-category="financials" style="padding: 8px 18px; font-size: 13px;">Bank Balance & Loans</button>
+          <button class="btn btn-outline faq-category-btn" data-category="testprep" style="padding: 8px 18px; font-size: 13px;">IELTS / PTE / SAT</button>
+          <button class="btn btn-outline faq-category-btn" data-category="visas" style="padding: 8px 18px; font-size: 13px;">Visas & Work Rights</button>
+        </div>
+
+        <!-- FAQ Accordion Items List -->
+        <div class="faq-accordion-list">
+          
+          <!-- Category 1: Admissions & Gaps -->
+          <div class="faq-group" data-group="admissions">
+            <h3 style="font-size: 18px; font-weight: 800; color: var(--color-navy); margin: 28px 0 16px 0; border-bottom: 2px solid var(--color-primary-light); padding-bottom: 8px;">Admissions & Study Gap Requirements</h3>
+            
+            <div class="accordion-item active">
+              <button class="accordion-trigger" aria-expanded="true">
+                <span>How much study gap is acceptable for Australia, Canada, UK, and USA?</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </button>
+              <div class="accordion-content" style="max-height: 300px;" aria-hidden="false">
+                <div class="accordion-body">
+                  For undergraduate applicants (+2 completed), a study gap of 1 to 2 years is generally acceptable if justified with test preparation or relevant volunteering. For Master's applicants, study gaps of up to 5 to 7 years are fully acceptable provided you submit continuous work experience letters, salary bank statements, tax clearance, and CIT/SSF records.
+                </div>
+              </div>
             </div>
-            <div class="faq-answer" style="display: none; margin-top: 14px; font-size: 14.5px; color: var(--color-text-muted); line-height: 1.6; border-top: 1px solid var(--color-border); padding-top: 14px;">
-              For undergraduate applicants (+2 completed), a study gap of 1 to 2 years is typically acceptable if justified with language preparation or relevant volunteering. For postgraduate applicants, study gaps of up to 5 to 7 years are fully acceptable provided you submit continuous work experience letters, tax clearance, and salary payslips.
+
+            <div class="accordion-item">
+              <button class="accordion-trigger" aria-expanded="false">
+                <span>When should I start my application process for abroad studies?</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </button>
+              <div class="accordion-content" aria-hidden="true">
+                <div class="accordion-body">
+                  We recommend starting 6 to 9 months before your target intake (e.g. for September intakes, start in January/February; for February/March intakes, start in July/August). This allows sufficient time for IELTS/PTE preparation, university offer letter processing, financial documentation, and visa lodging.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <button class="accordion-trigger" aria-expanded="false">
+                <span>Does Apex Abroad charge any fees for initial counseling and course shortlisting?</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </button>
+              <div class="accordion-content" aria-hidden="true">
+                <div class="accordion-body">
+                  No! Educational counseling, profile evaluation, course shortlisting, and application document checklists at Apex Abroad are 100% free of charge. Students only cover external fees such as university application fees (where applicable), test registration, visa embassy fees, medical checks, and biometrics.
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="card" style="padding: 24px;">
-            <div class="faq-question" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-              <h3 style="font-size: 17px; font-weight: 800; color: var(--color-navy); margin:0;">Who can sponsor my education from Nepal?</h3>
-              <span class="faq-toggle-icon" style="font-size: 20px; font-weight: 700; color: var(--color-primary);">+</span>
+          <!-- Category 2: Financials & Education Loans -->
+          <div class="faq-group" data-group="financials">
+            <h3 style="font-size: 18px; font-weight: 800; color: var(--color-navy); margin: 28px 0 16px 0; border-bottom: 2px solid var(--color-primary-light); padding-bottom: 8px;">Financial Sponsorship & Bank Loans in Nepal</h3>
+
+            <div class="accordion-item">
+              <button class="accordion-trigger" aria-expanded="false">
+                <span>Who can sponsor my education from Nepal for student visas?</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </button>
+              <div class="accordion-content" aria-hidden="true">
+                <div class="accordion-body">
+                  Primary sponsors include immediate family members: Father, Mother, Real Brothers/Sisters, and Paternal/Maternal Grandparents. Acceptable financial documents include education loans from 'Class A' commercial banks of Nepal, fixed deposit receipts held for the required duration, and verifiable annual family income (business profits, agriculture, rental, or salary with municipal ward tax verification).
+                </div>
+              </div>
             </div>
-            <div class="faq-answer" style="display: none; margin-top: 14px; font-size: 14.5px; color: var(--color-text-muted); line-height: 1.6; border-top: 1px solid var(--color-border); padding-top: 14px;">
-              Direct family members (Father, Mother, Real Brothers/Sisters, and Grandparents) are recognized as primary sponsors. Acceptable financial documents include education loans from 'Class A' commercial banks of Nepal, fixed deposit receipts, or documented family business/agricultural annual income with local municipal ward verification.
+
+            <div class="accordion-item">
+              <button class="accordion-trigger" aria-expanded="false">
+                <span>Which banks in Nepal are accepted by Australia, Canada, and UK embassies?</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </button>
+              <div class="accordion-content" aria-hidden="true">
+                <div class="accordion-body">
+                  Education loans and bank balances must originate from Nepal Rastra Bank (NRB) approved 'Class A' Commercial Banks (such as Nabil Bank, Nepal Investment Mega Bank, Rastriya Banijya Bank, Sanima Bank, Global IME, etc.). Co-operative society accounts and finance company loans are generally not accepted for visa financial evidence.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <button class="accordion-trigger" aria-expanded="false">
+                <span>What is the required bank balance amount for Australia and UK student visas?</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </button>
+              <div class="accordion-content" aria-hidden="true">
+                <div class="accordion-body">
+                  For Australia (Subclass 500), you must show 1 year of tuition fees + 1 year of living costs (approx. AUD $29,710) + travel allowance (approx. AUD $2,000). For the UK, you must show remaining 1st year tuition fees + living costs (£1,334/month for London or £1,023/month outside London for 9 months) held in a bank account for 28 consecutive days.
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="card" style="padding: 24px;">
-            <div class="faq-question" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-              <h3 style="font-size: 17px; font-weight: 800; color: var(--color-navy); margin:0;">Does Apex Abroad charge any fees for counseling?</h3>
-              <span class="faq-toggle-icon" style="font-size: 20px; font-weight: 700; color: var(--color-primary);">+</span>
+          <!-- Category 3: Test Prep -->
+          <div class="faq-group" data-group="testprep">
+            <h3 style="font-size: 18px; font-weight: 800; color: var(--color-navy); margin: 28px 0 16px 0; border-bottom: 2px solid var(--color-primary-light); padding-bottom: 8px;">Test Preparation (IELTS, PTE, SAT)</h3>
+
+            <div class="accordion-item">
+              <button class="accordion-trigger" aria-expanded="false">
+                <span>What minimum IELTS or PTE score is required for university admission?</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </button>
+              <div class="accordion-content" aria-hidden="true">
+                <div class="accordion-body">
+                  For Bachelor's degrees, universities generally require an IELTS score of 6.0 overall (no band less than 5.5) or a PTE Academic score of 50-58 overall. For Master's degrees, universities require an IELTS score of 6.5 overall (no band less than 6.0) or a PTE score of 58-65 overall. Nursing, Law, and Medicine programs may require higher scores (IELTS 7.0+).
+                </div>
+              </div>
             </div>
-            <div class="faq-answer" style="display: none; margin-top: 14px; font-size: 14.5px; color: var(--color-text-muted); line-height: 1.6; border-top: 1px solid var(--color-border); padding-top: 14px;">
-              No! All initial educational counseling, university course shortlisting, eligibility assessments, and document checklists are 100% free of charge. You only pay for test preparation materials and third-party fees (such as embassy visa fees and medical tests).
+
+            <div class="accordion-item">
+              <button class="accordion-trigger" aria-expanded="false">
+                <span>Is PTE Academic equally accepted as IELTS for Australia, UK, and Canada?</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </button>
+              <div class="accordion-content" aria-hidden="true">
+                <div class="accordion-body">
+                  Yes! PTE Academic is accepted by 100% of Australian universities and the Department of Home Affairs (DHA), 99% of UK universities & UKVI, and Canadian universities & IRCC for Student Direct Stream (SDS) and general study permit applications.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <button class="accordion-trigger" aria-expanded="false">
+                <span>Does Apex Abroad provide mock tests and study materials for IELTS/PTE?</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </button>
+              <div class="accordion-content" aria-hidden="true">
+                <div class="accordion-body">
+                  Yes! All enrolled students get free access to computer-lab PTE mock test simulations, weekly scored IELTS practice tests, speaking 1-on-1 sessions with certified trainers, and full digital practice materials.
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="card" style="padding: 24px;">
-            <div class="faq-question" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-              <h3 style="font-size: 17px; font-weight: 800; color: var(--color-navy); margin:0;">Can I reapply if my visa was previously rejected?</h3>
-              <span class="faq-toggle-icon" style="font-size: 20px; font-weight: 700; color: var(--color-primary);">+</span>
+          <!-- Category 4: Visas & Work Rights -->
+          <div class="faq-group" data-group="visas">
+            <h3 style="font-size: 18px; font-weight: 800; color: var(--color-navy); margin: 28px 0 16px 0; border-bottom: 2px solid var(--color-primary-light); padding-bottom: 8px;">Visas, Work Rights & Reapplications</h3>
+
+            <div class="accordion-item">
+              <button class="accordion-trigger" aria-expanded="false">
+                <span>What is the Genuine Student (GS) requirement for Australia and SOP for Canada?</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </button>
+              <div class="accordion-content" aria-hidden="true">
+                <div class="accordion-body">
+                  The Australian GS requirement and Canadian Statement of Purpose (SOP) assess your genuine intent to study abroad. You must detail your academic background, explain why you chose the specific course and university, demonstrate research into Nepal's local employment opportunities versus international career prospects, and show strong economic ties returning to your home country.
+                </div>
+              </div>
             </div>
-            <div class="faq-answer" style="display: none; margin-top: 14px; font-size: 14.5px; color: var(--color-text-muted); line-height: 1.6; border-top: 1px solid var(--color-border); padding-top: 14px;">
-              Yes. Many students with prior refusals come to Apex Abroad. We order ATIP GCMS notes (for Canada) or review decision record letters (for Australia/USA), resolve the specific concerns highlighted by the visa officer, and submit an evidence-backed reapplication with high success rates.
+
+            <div class="accordion-item">
+              <button class="accordion-trigger" aria-expanded="false">
+                <span>Can I reapply for a visa if I suffered a previous refusal?</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </button>
+              <div class="accordion-content" aria-hidden="true">
+                <div class="accordion-body">
+                  Absolutely. Over 30% of our successful visa clients had prior refusals before consulting Apex Abroad. We order ATIP GCMS notes for Canada or carefully review visa refusal letter points, identify gaps in previous documentation, restructure your financial proof and SOP/GS justification, and reapply with a strong appeal strategy.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <button class="accordion-trigger" aria-expanded="false">
+                <span>Am I allowed to work part-time while studying abroad?</span>
+                <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              </button>
+              <div class="accordion-content" aria-hidden="true">
+                <div class="accordion-body">
+                  Yes! International students have legal part-time work rights: Australia allows 48 hours per fortnight during terms and unlimited hours during vacations; Canada permits 24 hours per week off-campus; UK permits 20 hours per week during term time; USA allows up to 20 hours per week on-campus.
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Final CTA Banner -->
+    <section class="cta-banner-section">
+      <div class="container">
+        <div class="cta-banner-card">
+          <div class="cta-banner-content">
+            <div class="cta-banner-left">
+              <h2 class="cta-banner-heading">
+                Have More Questions?<br />
+                Let's Talk to Our <span class="cta-highlight">Counselors</span> Today.
+              </h2>
+            </div>
+            <div class="cta-banner-mid">
+              <p class="cta-banner-sub">
+                Book a 1-on-1 free counseling session to discuss your academic background, finances, and visa options.
+              </p>
+              <a href="/book-counseling.html" class="btn btn-white">
+                Book Free Counseling &rarr;
+              </a>
+            </div>
+            <div class="cta-banner-student">
+              <img src="/images/student-female-1.jpg" alt="Counseling student" referrerpolicy="no-referrer" />
             </div>
           </div>
         </div>
@@ -91,14 +359,93 @@
     </section>
   </main>
 
+  <!-- Site Footer -->
   <footer class="site-footer">
     <div class="container">
-      <div class="footer-bottom-bar" style="border-top:none; padding-top:0;">
+      <div class="footer-top-grid">
+        <div class="footer-about">
+          <a href="/index.html" class="brand-logo">
+            <div class="brand-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 22h4.5l5.5-12 5.5 12H22L12 2zm0 6l3.2 7h-6.4L12 8z"/></svg></div>
+            <div class="brand-text"><span class="brand-title">Apex Abroad</span><span class="brand-tagline">Your Future. Our Guidance.</span></div>
+          </a>
+          <p class="footer-desc">We are a leading international education consultancy based in Kathmandu, Nepal, helping students achieve global success.</p>
+          <div class="social-links">
+            <a href="#" class="social-link" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+            <a href="#" class="social-link" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+            <a href="#" class="social-link" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+            <a href="#" class="social-link" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Quick Links</h4>
+          <ul class="footer-links-list">
+            <li><a href="/index.html" class="footer-link">Home</a></li>
+            <li><a href="/about.html" class="footer-link">About Us</a></li>
+            <li><a href="/services.html" class="footer-link">Services</a></li>
+            <li><a href="/destinations.html" class="footer-link">Destinations</a></li>
+            <li><a href="/success-stories.html" class="footer-link">Success Stories</a></li>
+            <li><a href="/contact.html" class="footer-link">Contact</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Our Services</h4>
+          <ul class="footer-links-list">
+            <li><a href="/services/ielts.html" class="footer-link">IELTS Preparation</a></li>
+            <li><a href="/services/pte.html" class="footer-link">PTE Preparation</a></li>
+            <li><a href="/services/sat.html" class="footer-link">SAT Preparation</a></li>
+            <li><a href="/services/study-abroad-counseling.html" class="footer-link">Study Abroad Counseling</a></li>
+            <li><a href="/services/application-assistance.html" class="footer-link">Application Assistance</a></li>
+            <li><a href="/services/visa-guidance.html" class="footer-link">Visa Guidance</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Resources</h4>
+          <ul class="footer-links-list">
+            <li><a href="/resources/blogs.html" class="footer-link">Blogs &amp; News</a></li>
+            <li><a href="/resources/country-guides.html" class="footer-link">Country Guides</a></li>
+            <li><a href="/resources/university-rankings.html" class="footer-link">University Rankings</a></li>
+            <li><a href="/resources/scholarships.html" class="footer-link">Scholarships Guide</a></li>
+            <li><a href="/resources/faqs.html" class="footer-link">FAQs</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Contact Us</h4>
+          <ul class="contact-info-list">
+            <li class="contact-info-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>Putalisadak, Kathmandu, Nepal</span>
+            </li>
+            <li class="contact-info-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+              <span>+977 015456789</span>
+            </li>
+            <li class="contact-info-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <span>info@apexabroad.com.np</span>
+            </li>
+            <li class="contact-info-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span>Sun - Fri: 10:00 AM - 6:00 PM</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar">
         <span>&copy; 2024 Apex Abroad Consultancy. All Rights Reserved.</span>
-        <div class="footer-legal-links"><a href="/privacy-policy.html">Privacy Policy</a><span>&bull;</span><a href="/terms-and-conditions.html">Terms &amp; Conditions</a></div>
+        <div class="footer-legal-links">
+          <a href="/privacy-policy.html">Privacy Policy</a>
+          <span>&bull;</span>
+          <a href="/terms-and-conditions.html">Terms &amp; Conditions</a>
+        </div>
       </div>
     </div>
   </footer>
+
   <script type="module" src="/js/script.js"></script>
 </body>
 </html>

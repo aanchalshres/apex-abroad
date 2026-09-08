@@ -213,41 +213,118 @@ function initTestimonialCarousel() {
 }
 
 /* --------------------------------------------------------------------------
-   FAQ Accordions
+   FAQ Accordions & Interactive Expansion
    -------------------------------------------------------------------------- */
 function initFaqAccordion() {
+  // Support standard .accordion-item elements
   const accordionItems = document.querySelectorAll('.accordion-item');
-  if (!accordionItems.length) return;
+  
+  if (accordionItems.length) {
+    accordionItems.forEach(item => {
+      const trigger = item.querySelector('.accordion-trigger');
+      const content = item.querySelector('.accordion-content');
 
-  accordionItems.forEach(item => {
-    const trigger = item.querySelector('.accordion-trigger');
-    const content = item.querySelector('.accordion-content');
+      if (!trigger || !content) return;
 
-    if (!trigger || !content) return;
+      trigger.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        const parent = item.parentElement;
 
-    trigger.addEventListener('click', () => {
-      const isActive = item.classList.contains('active');
+        if (parent) {
+          parent.querySelectorAll('.accordion-item').forEach(other => {
+            if (other !== item) {
+              other.classList.remove('active');
+              trigger.setAttribute('aria-expanded', 'false');
+              const otherContent = other.querySelector('.accordion-content');
+              if (otherContent) {
+                otherContent.style.maxHeight = null;
+                otherContent.setAttribute('aria-hidden', 'true');
+              }
+            }
+          });
+        }
 
-      const parent = item.parentElement;
-      if (parent) {
-        parent.querySelectorAll('.accordion-item').forEach(other => {
-          if (other !== item) {
+        if (isActive) {
+          item.classList.remove('active');
+          trigger.setAttribute('aria-expanded', 'false');
+          content.style.maxHeight = null;
+          content.setAttribute('aria-hidden', 'true');
+        } else {
+          item.classList.add('active');
+          trigger.setAttribute('aria-expanded', 'true');
+          content.style.maxHeight = content.scrollHeight + 'px';
+          content.setAttribute('aria-hidden', 'false');
+        }
+      });
+    });
+  }
+
+  // Also support .faq-question inside .card or .faq-item elements
+  const faqQuestions = document.querySelectorAll('.faq-question');
+  faqQuestions.forEach(q => {
+    q.addEventListener('click', () => {
+      const card = q.closest('.card, .faq-item');
+      if (!card) return;
+
+      const answer = card.querySelector('.faq-answer');
+      const toggleIcon = q.querySelector('.faq-toggle-icon');
+      const isOpen = card.classList.contains('active') || (answer && answer.style.display === 'block');
+
+      // Close sibling FAQs in same container
+      const container = card.parentElement;
+      if (container) {
+        container.querySelectorAll('.card, .faq-item').forEach(other => {
+          if (other !== card) {
             other.classList.remove('active');
-            const otherContent = other.querySelector('.accordion-content');
-            if (otherContent) otherContent.style.maxHeight = null;
+            const otherAns = other.querySelector('.faq-answer');
+            const otherIcon = other.querySelector('.faq-toggle-icon');
+            if (otherAns) {
+              otherAns.style.display = 'none';
+              otherAns.style.maxHeight = null;
+            }
+            if (otherIcon) otherIcon.textContent = '+';
           }
         });
       }
 
-      if (isActive) {
-        item.classList.remove('active');
-        content.style.maxHeight = null;
+      if (isOpen) {
+        card.classList.remove('active');
+        if (answer) {
+          answer.style.display = 'none';
+          answer.style.maxHeight = null;
+        }
+        if (toggleIcon) toggleIcon.textContent = '+';
       } else {
-        item.classList.add('active');
-        content.style.maxHeight = content.scrollHeight + 'px';
+        card.classList.add('active');
+        if (answer) {
+          answer.style.display = 'block';
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+        }
+        if (toggleIcon) toggleIcon.textContent = '−';
       }
     });
   });
+
+  // Category filter tabs for FAQ page if present
+  const categoryBtns = document.querySelectorAll('.faq-category-btn');
+  if (categoryBtns.length) {
+    categoryBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        categoryBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const category = btn.getAttribute('data-category');
+        const groups = document.querySelectorAll('.faq-group');
+        groups.forEach(group => {
+          if (category === 'all' || group.getAttribute('data-group') === category) {
+            group.style.display = 'block';
+          } else {
+            group.style.display = 'none';
+          }
+        });
+      });
+    });
+  }
 }
 
 /* --------------------------------------------------------------------------
